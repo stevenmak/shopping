@@ -1,4 +1,4 @@
-## A PROPOS DU SHOPPIN
+## A PROPOS DU SHOPPING
 
 Shopping is a training project based on Laravel 7
 A complete e-commerce application to illustrate the use of Laravel 7.

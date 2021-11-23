@@ -25,7 +25,7 @@
               <input id="different" name="different" type="checkbox" @if($addresses->count() === 1)  disabled="disabled" @endif>
               <span>
                 @if($addresses->count() === 1)
-                  Vous n'avez qu'une adresse enregistrée, si vous voulez une adresse différente pour la livraison <a href="{{ route('adresses.create') }}">vous pouvez en créer une autre</a>.
+                  Vous n'avez qu'une adresse enregistrée, si vous voulez une adresse différente pour la livraison <a href="#">vous pouvez en créer une autre</a>.
                 @else
                   Mon adresse de livraison est différente de mon adresse de facturation
                 @endif

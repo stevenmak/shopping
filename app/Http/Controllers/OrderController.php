@@ -29,14 +29,16 @@ class OrderController extends Controller
     public function create(Request $request, Shipping $ship)
     {
         //la creation de la commandes
+
         $addresses = $request->user()->addresses()->get();
+
         if($addresses->isEmpty())
         {
             // Là il faudra renvoyer l'utilisateur sur son compte quand on l'aura créé
         }
-        $country_id = Arr::pluck($addresses,'addresses.country_id');
+        //dd($addresses);
+        $country_id = $addresses->first()->country_id;
         $shipping = $ship->compute($country_id);
-
         $content = \Cart::getContent();
         $total = \Cart::getTotal();
         $tax = Country::findOrFail($country_id)->tax;
@@ -56,7 +58,7 @@ class OrderController extends Controller
         //
 
         // Vérification du stock
-    $items = \Cart::getContent();
+    $items = Cart::getContent();
         foreach($items as $row)
         {
             $product = Product::findOrFail($row->id);
@@ -80,7 +82,7 @@ class OrderController extends Controller
         'reference' => strtoupper(Str::random(8)),
         'shipping' => $shipping,
         'tax' => $tax,
-        'total' => $tax > 0 ? \Cart::getTotal() : \Cart::getTotal() / (1 + $tvaBase),
+        'total' => $tax > 0 ? Cart::getTotal() : Cart::getTotal() / (1 + $tvaBase),
         'payment' => $request->payment,
         'pick' => $request->expedition === 'retrait',
         'state_id' => State::whereSlug($request->payment)->first()->id,
@@ -112,8 +114,8 @@ class OrderController extends Controller
             }
         }
     // On vide le panier
-        \Cart::clear();
-        \Cart::session($request->user())->clear();
+        Cart::clear();
+        Cart::session($request->user())->clear();
 
     // Notifications à prévoir pour les administrateurs et l'utilisateur
 

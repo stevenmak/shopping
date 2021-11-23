@@ -6,7 +6,7 @@ class Shipping
 {
     public function compute($country_id)
     {
-        $items = \Cart::getContent();
+        $items = Cart::getContent();
         $weight = $items->sum(function ($item) {
             return $item->quantity * $item->model->weight;
         });
